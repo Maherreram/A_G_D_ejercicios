@@ -1,4 +1,8 @@
 import sys
 #
-#  >>> Escriba el codigo del mapper a partir de este punto <<<
+for row in sys.stdin:
+  for camp in row:
+    año, mes, dia = row.split("-")
+    #sys.stdout.write(val.rstrip() + "\t" + key.rstrip() +"\n")
+  sys.stdout.write("{}\t1\n".format(mes.rstrip()))
 #

@@ -6,5 +6,9 @@
 -- 
 fs -rm -f -r output;
 --
--- >>> Escriba su respuesta a partir de este punto <<<
+datos = LOAD 'data.tsv' USING PigStorage('\t') AS (letra:chararray, fecha:chararray, cantidad:int);
+ord_cant = ORDER datos BY cantidad;
+atri_cant = FOREACH ord_cant GENERATE cantidad;
+filtro = LIMIT atri_cant 5;
+STORE filtro INTO './output'  USING PigStorage('\t');
 --

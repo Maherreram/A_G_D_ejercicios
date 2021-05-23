@@ -25,5 +25,7 @@ u = LOAD 'data.csv' USING PigStorage(',')
         color:CHARARRAY, 
         quantity:INT);
 --
--- >>> Escriba su respuesta a partir de este punto <<<
+nuevo = FOREACH u GENERATE firstname AS firstname, color AS color;
+filtro = FILTER nuevo BY NOT((color matches 'black') OR (color matches 'blue'));
+STORE filtro INTO './output'  USING PigStorage(',');
 --

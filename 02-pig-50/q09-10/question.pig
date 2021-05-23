@@ -27,5 +27,6 @@
 -- 
 fs -rm -f -r output;
 --
-
-
+datos = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, cantidad:int);
+columnas = FOREACH datos GENERATE nombre AS nombre, apellido AS apellido;
+STORE columnas INTO './output'  USING PigStorage('@');

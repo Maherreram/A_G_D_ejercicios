@@ -9,6 +9,11 @@
 -- 
 fs -rm -f -r output;
 --
--- >>> Escriba su respuesta a partir de este punto <<<
+datos = LOAD 'data.tsv' USING PigStorage('\t') AS (letra:chararray, col2:chararray, col3:chararray);
+words = FOREACH datos GENERATE FLATTEN(TOKENIZE(col2)) AS let;
+agrupamiento = GROUP words BY let;
+wordcount = FOREACH agrupamiento GENERATE group, COUNT(words);
+limitar = LIMIT wordcount 7;
+STORE limitar INTO './output'  USING PigStorage('\t');
 --
 

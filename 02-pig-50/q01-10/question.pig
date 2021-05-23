@@ -7,5 +7,8 @@
 --
 fs -rm -f -r output;
 --
--- >>> Escriba su respuesta a partir de este punto <<<
+datos = LOAD 'data.tsv' USING PigStorage('\t') AS (letra:chararray, fecha:chararray, cantidad:int);
+agrupamiento = GROUP datos by letra;
+suma = FOREACH agrupamiento GENERATE group, COUNT(datos);
+STORE suma INTO './output'  USING PigStorage('\t');
 --

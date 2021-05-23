@@ -7,6 +7,7 @@
 --
 -- Escriba el resultado a la carpeta `output` de directorio de trabajo.
 --
+--
 DROP TABLE IF EXISTS tbl0;
 CREATE TABLE tbl0 (
     c1 INT,
@@ -37,6 +38,38 @@ MAP KEYS TERMINATED BY '#'
 LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 --
--- >>> Escriba su respuesta a partir de este punto <<<
+DROP TABLE IF EXISTS consulta0;
+CREATE TABLE consulta0 AS
+SELECT c5[0] as c0 FROM  tbl0;
+--
+DROP TABLE IF EXISTS consulta1;
+CREATE TABLE consulta1 AS
+SELECT c5[1] as c1 FROM  tbl0;
+--
+DROP TABLE IF EXISTS consulta2;
+CREATE TABLE consulta2 AS
+SELECT c5[2] as c2 FROM  tbl0;
+--
+DROP TABLE IF EXISTS consulta3;
+CREATE TABLE consulta3 AS
+SELECT c5[3] as c3 FROM  tbl0;
+--
+DROP TABLE IF EXISTS consulta4;
+CREATE TABLE consulta4 AS
+SELECT c5[4] as c4 FROM  tbl0;
+--
+insert into table consulta0 select c1 from consulta1;
+insert into table consulta0 select c2 from consulta2;
+insert into table consulta0 select c3 from consulta3;
+insert into table consulta0 select c4 from consulta4;
+--
+DROP TABLE IF EXISTS consultafinal;
+CREATE TABLE consultafinal AS
+SELECT distinct c0 as c0 FROM  consulta0 where c0!='null';
+--
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM consultafinal;
+--
 --
 

@@ -10,5 +10,12 @@
 -- 
 fs -rm -f -r output;
 --
--- >>> Escriba su respuesta a partir de este punto <<<
+datos = LOAD 'data.tsv' USING PigStorage('\t') AS (letra:chararray, col2:chararray, col3:chararray);
+nuevo = FOREACH datos GENERATE FLATTEN(STRSPLITTOBAG(col3, '[^A-Za-z0-9]')) AS separacion;
+agrupamiento = GROUP nuevo BY separacion;
+cuenta = FOREACH agrupamiento GENERATE group, COUNT(nuevo);
+ordenamiento_1 = ORDER cuenta BY group DESC;
+filtro = LIMIT ordenamiento_1 10;
+ordenamiento_2 = ORDER filtro BY group ASC;
+STORE ordenamiento_2 INTO './output'  USING PigStorage(',');
 --

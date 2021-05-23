@@ -24,5 +24,8 @@ u = LOAD 'data.csv' USING PigStorage(',')
         color:CHARARRAY, 
         quantity:INT);
 --
--- >>> Escriba su respuesta a partir de este punto <<<
+nuevo = FOREACH u GENERATE surname as surname, COUNT(STRSPLITTOBAG(surname, '')) AS cuenta_let;
+ordenamiento = ORDER nuevo BY cuenta_let DESC, surname;
+filtro = LIMIT ordenamiento 5;
+STORE filtro INTO './output'  USING PigStorage(',');
 --
