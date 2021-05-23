@@ -22,7 +22,8 @@ def run_answer():
     #----------------------------------------------------------------------------------------------
     # Ejecuta el código del estudiante
     #----------------------------------------------------------------------------------------------
-    result = os.popen('cat data.csv | python3 mapper.py |  python3 reducer.py').read()
+    result = os.popen('cat data.csv | python3 mapper.py |  python3 reducer.py').read() #Se modificó el sort, eliminandolo de esta lìnea ya que extrañamente 
+    #estaba desordenando los datos y con ello la solución. con el sort en esta linea el ejercicio no corre
     print(result)
 
 #--------------------------------------------------------------------------------------------------
